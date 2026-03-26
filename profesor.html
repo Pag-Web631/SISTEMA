@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Profesor</title>
+
+<link rel="stylesheet" href="profesor.css">
+<link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="api.js"></script>
+<script>
+    // Instancia global de la API (si no existe)
+    if (typeof api === 'undefined') {
+        var api = new ApiClient();
+    }
+</script>
+<script src="profesor.js"></script>
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+    <h2><i class="fas fa-chalkboard-teacher"></i> Profesor</h2>
+
+    <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#crearCurso">Crear Curso</a></li>
+        <li><a href="#tareas">Tareas</a></li>
+        <li><a href="#estudiantes">Estudiantes</a></li>
+    </ul>
+
+    <button onclick="logout()" class="logout">Cerrar Sesión</button>
+</aside>
+
+<!-- MAIN -->
+<main>
+
+<header>
+    <h3 id="userName"></h3>
+</header>
+
+<!-- INICIO -->
+<section id="inicio">
+    <h1>Hola, <span id="nombre"></span> 👨‍🏫</h1>
+    <p>Gestiona tus cursos y estudiantes.</p>
+
+    <div class="stats">
+        <div>3<br><span>Cursos</span></div>
+        <div>25<br><span>Estudiantes</span></div>
+        <div>6<br><span>Tareas</span></div>
+    </div>
+</section>
+
+<!-- CREAR CURSO -->
+<section id="crearCurso">
+    <h2>Crear Curso</h2>
+
+    <input type="text" id="cursoNombre" placeholder="Nombre del curso">
+    <button onclick="crearCurso()">Crear</button>
+
+    <div id="listaCursos"></div>
+</section>
+
+<!-- TAREAS -->
+<section id="tareas">
+    <h2>Crear Tarea</h2>
+
+    <input type="text" id="tareaTexto" placeholder="Nombre de la tarea">
+    <button onclick="crearTarea()">Agregar</button>
+
+    <div id="listaTareas"></div>
+</section>
+
+<!-- ESTUDIANTES -->
+<section id="estudiantes">
+    <h2>Estudiantes Registrados</h2>
+
+    <div id="listaEstudiantes"></div>
+</section>
+
+</main>
+
+<script src="profesor.js"></script>
+</body>
+</html>

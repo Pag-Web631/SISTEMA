@@ -1,0 +1,460 @@
+<!-- 
+╔════════════════════════════════════════════════════════════════╗
+║                  CURSOS VIRTUAL - v2.0 MODERNA               ║
+║              Plataforma E-Learning Modernizada 2026           ║
+║                                                                ║
+║  🎨 Diseño Premium | 📱 Totalmente Responsivo | ⚡ Rápida    ║
+╚════════════════════════════════════════════════════════════════╝
+-->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Cursos Virtual 2.0 - Plataforma de aprendizaje moderna">
+    <meta name="theme-color" content="#667eea">
+    <title>Cursos Virtual 2.0 - Inicio</title>
+    
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section h2 {
+            font-size: 1.6rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .link-card {
+            background: linear-gradient(135deg, #f5f7ff 0%, #f0f4ff 100%);
+            border: 2px solid #e8eef8;
+            padding: 25px;
+            border-radius: 15px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .link-card:hover {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            border-color: transparent;
+        }
+        
+        .link-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .link-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .link-card p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .feature {
+            background: #f5f7ff;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .feature h4 {
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .feature p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .status {
+            background: #f0f9ff;
+            border-left: 4px solid #0ea5e9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .status h3 {
+            color: #0ea5e9;
+            margin-bottom: 10px;
+        }
+        
+        .files-list {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            padding: 5px 0;
+        }
+        
+        .file-item .icon {
+            margin-right: 10px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .file-item .new {
+            color: #10b981;
+            background: #d1fae5;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-left: 10px;
+        }
+        
+        .file-item .updated {
+            color: #2563eb;
+            background: #dbeafe;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            margin-left: 10px;
+        }
+        
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        button {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+        
+        .btn-secondary:hover {
+            background: #f5f7ff;
+            transform: translateY(-2px);
+        }
+        
+        .footer {
+            background: #f5f7ff;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .section h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1><i class="fas fa-graduation-cap"></i> Cursos Virtual 2.0</h1>
+            <p>🚀 Plataforma de Aprendizaje Moderna - Totalmente Responsiva</p>
+        </div>
+        
+        <!-- CONTENIDO -->
+        <div class="content">
+            <!-- BIENVENIDA -->
+            <div class="section">
+                <h2><i class="fas fa-star"></i> Bienvenido</h2>
+                <p>Tu plataforma de aprendizaje ha sido completamente rediseñada con:</p>
+                
+                <div class="features">
+                    <div class="feature">
+                        <h4>🎨 Diseño Moderno</h4>
+                        <p>Interfaz premium con gradientes y animaciones</p>
+                    </div>
+                    <div class="feature">
+                        <h4>📱 Responsive</h4>
+                        <p>Optimizada para móviles, tablets y desktop</p>
+                    </div>
+                    <div class="feature">
+                        <h4>⚡ Rápida</h4>
+                        <p>CSS3 optimizado y transiciones suaves</p>
+                    </div>
+                    <div class="feature">
+                        <h4>💻 APK Ready</h4>
+                        <p>Lista para compilar con Cordova</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ACCESO RÁPIDO -->
+            <div class="section">
+                <h2><i class="fas fa-rocket"></i> Acceso Rápido</h2>
+                
+                <div class="links-grid">
+                    <a href="index.html" class="link-card">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <h3>Iniciar Sesión</h3>
+                        <p>Accede con tu cuenta</p>
+                    </a>
+                    
+                    <a href="estudiante-nuevo.html" class="link-card">
+                        <i class="fas fa-book-open"></i>
+                        <h3>Panel Estudiante</h3>
+                        <p>Vista de cursos y tareas</p>
+                    </a>
+                    
+                    <a href="profesor-nuevo.html" class="link-card">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <h3>Panel Profesor</h3>
+                        <p>Gestiona tus cursos</p>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- ESTADO DEL PROYECTO -->
+            <div class="section">
+                <h2><i class="fas fa-info-circle"></i> Estado del Proyecto</h2>
+                
+                <div class="status">
+                    <h3>✅ Versión 2.0 - Modernizada Completa</h3>
+                    <p>
+                        <strong>Cambios realizados:</strong><br>
+                        • 3 archivos HTML completamente rediseñados<br>
+                        • 3 archivos CSS modernizados con gradientes<br>
+                        • Animaciones suaves en todos los componentes<br>
+                        • Tipografía premium (Google Fonts - Inter)<br>
+                        • Responsive design avanzado<br>
+                        • Documentación completa incluida
+                    </p>
+                </div>
+            </div>
+            
+            <!-- ARCHIVOS DEL PROYECTO -->
+            <div class="section">
+                <h2><i class="fas fa-file-code"></i> Archivos Actualizados</h2>
+                
+                <div class="files-list">
+                    <div class="file-item">
+                        <span class="icon">📄</span>
+                        <span>index.html</span>
+                        <span class="new">ACTUALIZADO</span>
+                    </div>
+                    <div class="file-item">
+                        <span class="icon">📄</span>
+                        <span>estudiante-nuevo.html</span>
+                        <span class="new">NUEVO</span>
+                    </div>
+                    <div class="file-item">
+                        <span class="icon">📄</span>
+                        <span>profesor-nuevo.html</span>
+                        <span class="new">NUEVO</span>
+                    </div>
+                    <div class="file-item">
+                        <span class="icon">🎨</span>
+                        <span>login.css</span>
+                        <span class="updated">ACTUALIZADO</span>
+                    </div>
+                    <div class="file-item">
+                        <span class="icon">🎨</span>
+                        <span>index.css</span>
+                        <span class="updated">ACTUALIZADO</span>
+                    </div>
+                    <div class="file-item">
+                        <span class="icon">🎨</span>
+                        <span>profesor.css</span>
+                        <span class="updated">ACTUALIZADO</span>
+                    </div>
+                    <div class="file-item">
+                        <span class="icon">📖</span>
+                        <span>README.md</span>
+                        <span class="new">NUEVO</span>
+                    </div>
+                    <div class="file-item">
+                        <span class="icon">📖</span>
+                        <span>FEATURES.md</span>
+                        <span class="new">NUEVO</span>
+                    </div>
+                    <div class="file-item">
+                        <span class="icon">📖</span>
+                        <span>QUICK-START.md</span>
+                        <span class="new">NUEVO</span>
+                    </div>
+                    <div class="file-item">
+                        <span class="icon">📦</span>
+                        <span>package.json</span>
+                        <span class="new">NUEVO</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- DOCUMENTACIÓN -->
+            <div class="section">
+                <h2><i class="fas fa-book"></i> Documentación</h2>
+                
+                <div class="links-grid">
+                    <a href="README.md" class="link-card" onclick="window.location.href='https://github.com/'; return false;">
+                        <i class="fas fa-readme"></i>
+                        <h3>README.md</h3>
+                        <p>Guía general del proyecto</p>
+                    </a>
+                    
+                    <a href="FEATURES.md" class="link-card" onclick="alert('Abre con un editor de texto o Markdown viewer'); return false;">
+                        <i class="fas fa-list"></i>
+                        <h3>FEATURES.md</h3>
+                        <p>Detalle de cambios y características</p>
+                    </a>
+                    
+                    <a href="QUICK-START.md" class="link-card" onclick="alert('Abre con un editor de texto'); return false;">
+                        <i class="fas fa-bolt"></i>
+                        <h3>QUICK-START.md</h3>
+                        <p>Guía rápida para compilar APK</p>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- PRÓXIMOS PASOS -->
+            <div class="section">
+                <h2><i class="fas fa-directions"></i> Próximos Pasos</h2>
+                
+                <div class="button-group">
+                    <button onclick="window.location.href='index.html'" class="btn-primary">
+                        <i class="fas fa-play"></i> Probar Aplicación
+                    </button>
+                    
+                    <button onclick="alert('Sigue la guía QUICK-START.md para compilar a APK con Cordova')" class="btn-secondary">
+                        <i class="fas fa-mobile-alt"></i> Compilar APK
+                    </button>
+                </div>
+                
+                <p>
+                    <strong>Para compilar a APK:</strong><br><br>
+                    1. Instala Node.js y Java JDK<br>
+                    2. Ejecuta: <code style="background: #f5f5f5; padding: 2px 5px; border-radius: 4px;">npm install -g cordova</code><br>
+                    3. Sigue la guía QUICK-START.md
+                </p>
+            </div>
+        </div>
+        
+        <!-- FOOTER -->
+        <div class="footer">
+            <p><strong>Cursos Virtual 2.0</strong> | Desarrollador: José Augusto | Email: contacto@cursosvirtual.com</p>
+            <p>© 2026 Cursos Virtual - Todos los derechos reservados</p>
+        </div>
+    </div>
+</body>
+
+</html>

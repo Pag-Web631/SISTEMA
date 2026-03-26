@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Estudiante</title>
+
+<link rel="stylesheet" href="index.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+    <h2><i class="fas fa-graduation-cap"></i> Cursos Virtual</h2>
+
+    <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#cursos">Cursos</a></li>
+        <li><a href="#tareas">Tareas</a></li>
+        <li><a href="#perfil">Perfil</a></li>
+    </ul>
+
+    <button onclick="logout()" class="logout">Cerrar Sesión</button>
+</aside>
+
+<!-- MAIN -->
+<main>
+
+<!-- HEADER -->
+<header>
+    <h3 id="userName">👨‍🎓 Estudiante</h3>
+</header>
+
+<!-- INICIO -->
+<section id="inicio">
+    <h1>Hola, <span id="nombre"></span> 👋</h1>
+    <p>Continúa tu aprendizaje.</p>
+
+    <button class="btn">Continuar</button>
+
+    <!-- STATS -->
+    <div class="stats">
+        <div>4<br><span>Cursos</span></div>
+        <div>2<br><span>Completados</span></div>
+        <div>12<br><span>Días</span></div>
+        <div>8.5<br><span>Promedio</span></div>
+    </div>
+</section>
+
+<!-- CURSOS -->
+<section id="cursos">
+    <h2>Mis Cursos</h2>
+
+    <div class="cards">
+        <div class="card">
+            <h3>Python</h3>
+            <p>65% completado</p>
+        </div>
+
+        <div class="card">
+            <h3>Diseño Web</h3>
+            <p>100% completado</p>
+        </div>
+
+        <div class="card">
+            <h3>MySQL</h3>
+            <p>45% completado</p>
+        </div>
+
+        <div class="card">
+            <h3>JavaScript</h3>
+            <p>0% completado</p>
+        </div>
+    </div>
+</section>
+
+<!-- TAREAS -->
+<section id="tareas">
+    <h2>Tareas</h2>
+
+    <div class="card">
+        <p>Variables en Python</p>
+        <span>Vence: 28 Marzo</span>
+    </div>
+
+    <div class="card">
+        <p>Normalización BD</p>
+        <span class="alert">Vencido</span>
+    </div>
+</section>
+
+<!-- PERFIL -->
+<section id="perfil">
+    <h2>Perfil</h2>
+
+    <div class="card">
+        <p><strong>Nombre:</strong> <span id="perfilNombre"></span></p>
+        <p><strong>Email:</strong> <span id="perfilEmail"></span></p>
+        <p><strong>Rol:</strong> Estudiante</p>
+    </div>
+</section>
+
+</main>
+
+<script src="estudiante.js"></script>
+</body>
+</html>

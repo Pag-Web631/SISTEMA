@@ -1,0 +1,56 @@
+{
+  "name": "cursos-virtual-apk",
+  "version": "2.0.0",
+  "description": "Plataforma moderna de aprendizaje en línea - Optimizada para móviles",
+  "main": "index.html",
+  "scripts": {
+    "start": "cordova run android",
+    "build": "cordova build android",
+    "build:release": "cordova build android --release",
+    "emulate": "cordova emulate android",
+    "serve": "http-server www -p 8080 -c-1",
+    "setup": "npm install && cordova platform add android",
+    "clean": "cordova clean",
+    "info": "cordova info"
+  },
+  "keywords": [
+    "educación",
+    "e-learning",
+    "cursos",
+    "virtual",
+    "android",
+    "app",
+    "mobile",
+    "cordova",
+    "capacitor"
+  ],
+  "author": "José Augusto",
+  "authorEmail": "contacto@cursosvirtual.com",
+  "license": "MIT",
+  "devDependencies": {
+    "cordova": "^12.0.0",
+    "http-server": "^14.1.1"
+  },
+  "dependencies": {},
+  "cordova": {
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-statusbar": {}
+    },
+    "platforms": [
+      "android"
+    ]
+  },
+  "platforms": ["android"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/usuario/cursos-virtual.git"
+  },
+  "bugs": {
+    "url": "https://github.com/usuario/cursos-virtual/issues"
+  },
+  "homepage": "https://cursosvirtual.com"
+}

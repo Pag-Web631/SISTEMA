@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Mis Cursos - Cursos Virtual">
+    <meta name="theme-color" content="#667eea">
+    <title>Mis Cursos - Cursos Virtual</title>
+
+    <link rel="stylesheet" href="index.css">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .curso-card {
+            background: rgba(31, 36, 72, 0.8);
+            backdrop-filter: blur(15px);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .curso-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+        .curso-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+        .curso-card h3 {
+            margin: 0 0 12px 0;
+            color: #99a9ff;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        .curso-card p {
+            margin: 6px 0;
+            color: #c7c9ff;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .nivel {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 12px 0;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+        .nivel-basico {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(118, 75, 162, 0.2));
+            color: #99a9ff;
+        }
+        .nivel-intermedio {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 152, 0, 0.2));
+            color: #ffcc02;
+        }
+        .nivel-avanzado {
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.2), rgba(233, 30, 99, 0.2));
+            color: #e91e63;
+        }
+        .progreso-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 12px 0;
+            overflow: hidden;
+        }
+        .progreso-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        .btn:hover::before {
+            left: 100%;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+        }
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.5);
+        }
+        .btn-small {
+            background: linear-gradient(135deg, rgba(255, 68, 68, 0.8), rgba(255, 107, 107, 0.8));
+            color: white;
+            padding: 8px 16px;
+            box-shadow: 0 4px 15px rgba(255, 68, 68, 0.4);
+        }
+        .btn-small:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 68, 68, 0.5);
+        }
+        .tab-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .tab-buttons button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        .tab-buttons button.active {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            box-shadow: 0 6px 20px rgba(118, 75, 162, 0.5);
+        }
+        .tab-buttons button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 50px 25px;
+            color: #c7c9ff;
+            background: rgba(31, 36, 72, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #99a9ff;
+        }
+        .section-container {
+            background: rgba(31, 36, 72, 0.8);
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+        }
+        .section-container h2 {
+            color: #e6e8ff;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-container h2::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2><i class="fas fa-book"></i> Mis Cursos</h2>
+
+        <ul>
+            <li><a href="inicio-estudiante.html"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="cursos-estudiante.html" class="active"><i class="fas fa-book"></i> Cursos</a></li>
+            <li><a href="tareas-estudiante.html"><i class="fas fa-tasks"></i> Tareas</a></li>
+            <li><a href="cuestionarios-estudiante.html"><i class="fas fa-question-circle"></i> Cuestionarios</a></li>
+            <li><a href="perfil-estudiante.html"><i class="fas fa-user-circle"></i> Perfil</a></li>
+        </ul>
+
+        <button onclick="logout()" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+        <header>
+            <h3><i class="fas fa-book"></i> Mis Cursos</h3>
+        </header>
+
+        <!-- SECCIÓN MIS CURSOS -->
+        <section>
+            <h2><i class="fas fa-graduation-cap"></i> Cursos en los que estoy inscrito</h2>
+            <div id="misCursos"></div>
+        </section>
+
+        <!-- SECCIÓN MIS TAREAS -->
+        <section>
+            <h2><i class="fas fa-tasks"></i> Mis Tareas</h2>
+            <div id="misTareas"></div>
+        </section>
+
+        <!-- SECCIÓN MIS CUESTIONARIOS -->
+        <section>
+            <h2><i class="fas fa-question-circle"></i> Mis Cuestionarios</h2>
+            <div id="misCuestionarios"></div>
+        </section>
+
+        <!-- SECCIÓN CURSOS DISPONIBLES -->
+        <section>
+            <h2><i class="fas fa-search"></i> Cursos Disponibles</h2>
+            <p>Explora y únete a nuevos cursos</p>
+            <div id="cursosDisponibles"></div>
+        </section>
+    </main>
+
+    <script>
+        // ========== PROTECCIÓN ========== 
+        if (localStorage.getItem("isLoggedIn") !== "true") {
+            window.location.href = "index.html";
+        }
+
+        const nombreEstudiante = localStorage.getItem("userName") || "Estudiante";
+
+        // ========== MOSTRAR MIS CURSOS ========== 
+        function mostrarMisCursos() {
+            const cursos = JSON.parse(localStorage.getItem("cursos")) || [];
+            const inscripciones = JSON.parse(localStorage.getItem("inscripciones")) || [];
+            
+            // Obtener IDs de cursos en los que está inscrito
+            const cursosInscritosIds = inscripciones
+                .filter(i => i.estudiante === nombreEstudiante)
+                .map(i => i.cursoId);
+
+            const misCursos = cursos.filter(c => cursosInscritosIds.includes(c.id));
+
+            let html = "";
+            if (misCursos.length === 0) {
+                html = `
+                    <div class="empty-state">
+                        <i class="fas fa-inbox"></i>
+                        <p>Aún no estás inscrito en ningún curso</p>
+                        <p style="font-size: 14px; margin-top: 10px;">Explora los cursos disponibles para comenzar</p>
+                    </div>
+                `;
+            } else {
+                misCursos.forEach(curso => {
+                    // Escapar caracteres especiales en la descripción
+                    const descripcionEscapada = curso.descripcion
+                        .replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                        .replace(/"/g, '&quot;')
+                        .replace(/'/g, '&#39;');
+
+                    html += `
+                        <div class="curso-card">
+                            <h3>📖 ${curso.nombre}</h3>
+                            <span class="nivel nivel-${curso.nivel.toLowerCase()}">
+                                <i class="fas fa-signal"></i> ${curso.nivel}
+                            </span>
+                            <p><strong>Profesor:</strong> ${curso.profesor}</p>
+                            <p><strong>Duración:</strong> ${curso.duracion} horas</p>
+                            <p>${descripcionEscapada}</p>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById("misCursos").innerHTML = html;
+        }
+
+        // ========== MOSTRAR MIS TAREAS ========== 
+        function mostrarMisTareas() {
+            const tareas = JSON.parse(localStorage.getItem("tareas")) || [];
+            const cursos = JSON.parse(localStorage.getItem("cursos")) || [];
+            const inscripciones = JSON.parse(localStorage.getItem("inscripciones")) || [];
+            
+            // Obtener IDs de cursos inscritos
+            const cursosInscritosIds = inscripciones
+                .filter(i => i.estudiante === nombreEstudiante)
+                .map(i => i.cursoId);
+
+            // Filtrar tareas de cursos inscritos
+            const misTareas = tareas.filter(t => cursosInscritosIds.includes(t.cursoId));
+
+            let html = "";
+            if (misTareas.length === 0) {
+                html = `
+                    <div class="empty-state">
+                        <i class="fas fa-clipboard-list"></i>
+                        <p>No hay tareas asignadas aún</p>
+                    </div>
+                `;
+            } else {
+                misTareas.forEach(tarea => {
+                    const curso = cursos.find(c => c.id === tarea.cursoId);
+                    html += `
+                        <div class="curso-card">
+                            <h3>✓ ${tarea.nombre}</h3>
+                            <p><strong>Curso:</strong> ${curso ? curso.nombre : 'N/A'}</p>
+                            <p><strong>Fecha entrega:</strong> ${tarea.fecha}</p>
+                            <p><strong>Puntos:</strong> ${tarea.puntos}</p>
+                            <p>${tarea.descripcion}</p>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById("misTareas").innerHTML = html;
+        }
+
+        // ========== MOSTRAR MIS CUESTIONARIOS ========== 
+        function mostrarMisCuestionarios() {
+            const cuestionarios = JSON.parse(localStorage.getItem("cuestionarios")) || [];
+            const cursos = JSON.parse(localStorage.getItem("cursos")) || [];
+            const inscripciones = JSON.parse(localStorage.getItem("inscripciones")) || [];
+            
+            // Obtener IDs de cursos inscritos
+            const cursosInscritosIds = inscripciones
+                .filter(i => i.estudiante === nombreEstudiante)
+                .map(i => i.cursoId);
+
+            // Filtrar cuestionarios de cursos inscritos
+            const misCuestionarios = cuestionarios.filter(c => cursosInscritosIds.includes(c.cursoId));
+
+            let html = "";
+            if (misCuestionarios.length === 0) {
+                html = `
+                    <div class="empty-state">
+                        <i class="fas fa-question-circle"></i>
+                        <p>No hay cuestionarios disponibles aún</p>
+                    </div>
+                `;
+            } else {
+                misCuestionarios.forEach(cuest => {
+                    const curso = cursos.find(c => c.id === cuest.cursoId);
+                    html += `
+                        <div class="curso-card">
+                            <h3>❓ ${cuest.nombre}</h3>
+                            <p><strong>Curso:</strong> ${curso ? curso.nombre : 'N/A'}</p>
+                            <p><strong>Preguntas:</strong> ${cuest.preguntas.length}</p>
+                            <p><strong>Tiempo:</strong> ${cuest.tiempo} minutos</p>
+                            <p><strong>Puntos totales:</strong> ${cuest.totalPuntos}</p>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById("misCuestionarios").innerHTML = html;
+        }
+
+        // ========== MOSTRAR CURSOS DISPONIBLES ========== 
+        function mostrarCursosDisponibles() {
+            const cursos = JSON.parse(localStorage.getItem("cursos")) || [];
+            const inscripciones = JSON.parse(localStorage.getItem("inscripciones")) || [];
+            
+            // Obtener IDs de cursos ya inscritos
+            const cursosInscritosIds = inscripciones
+                .filter(i => i.estudiante === nombreEstudiante)
+                .map(i => i.cursoId);
+
+            // Filtrar cursos NO inscritos
+            const cursosDisponibles = cursos.filter(c => !cursosInscritosIds.includes(c.id));
+
+            let html = "";
+            if (cursosDisponibles.length === 0) {
+                html = `
+                    <div class="empty-state">
+                        <i class="fas fa-check-circle"></i>
+                        <p>¡Ya estás inscrito en todos los cursos disponibles!</p>
+                    </div>
+                `;
+            } else {
+                cursosDisponibles.forEach(curso => {
+                    const inscritos = inscripciones.filter(i => i.cursoId === curso.id).length;
+
+                    html += `
+                        <div class="curso-card">
+                            <h3>📖 ${curso.nombre}</h3>
+                            <span class="nivel nivel-${curso.nivel.toLowerCase()}">
+                                <i class="fas fa-signal"></i> ${curso.nivel}
+                            </span>
+                            <p><strong>Profesor:</strong> ${curso.profesor}</p>
+                            <p><strong>Duración:</strong> ${curso.duracion} horas</p>
+                            <p><strong>Estudiantes Inscritos:</strong> ${inscritos}</p>
+                            <p>${curso.descripcion}</p>
+                            <div class="btn-group">
+                                <button class="btn btn-success" onclick="inscribir(${curso.id}, '${curso.nombre}')">
+                                    <i class="fas fa-check-circle"></i> Inscribirse Ahora
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            document.getElementById("cursosDisponibles").innerHTML = html;
+        }
+
+        // ========== INSCRIBIRSE EN CURSO ========== 
+        function inscribir(cursoId, nombreCurso) {
+            let inscripciones = JSON.parse(localStorage.getItem("inscripciones")) || [];
+            
+            // Verificar que no esté ya inscrito
+            if (inscripciones.some(i => i.estudiante === nombreEstudiante && i.cursoId === cursoId)) {
+                alert("⚠️ Ya estás inscrito en este curso");
+                return;
+            }
+
+            inscripciones.push({
+                estudiante: nombreEstudiante,
+                cursoId: cursoId,
+                fecha: new Date().toLocaleDateString('es-ES'),
+                estado: "Activo"
+            });
+            localStorage.setItem("inscripciones", JSON.stringify(inscripciones));
+
+            alert(`✅ ¡Te has inscrito en "${nombreCurso}" exitosamente!`);
+            mostrarCursosInscritos();
+            mostrarCursosDisponibles();
+        }
+
+        // ========== ABANDONAR CURSO ========== 
+        function abandonarCurso(cursoId, nombreCurso) {
+            alert("⚠️ No puedes abandonar el curso por tu cuenta. Solo el profesor puede expulsar estudiantes.");
+            // Mantener la inscripción tal como está
+        }
+
+        // ========== LOGOUT ========== 
+        function logout() {
+            if (confirm("¿Cerrar sesión?")) {
+                localStorage.removeItem("isLoggedIn");
+                localStorage.removeItem("userName");
+                localStorage.removeItem("userEmail");
+                localStorage.removeItem("userRole");
+                window.location.href = "index.html";
+            }
+        }
+
+        // CARGAR AL INICIO
+        mostrarMisCursos();
+        mostrarMisTareas();
+        mostrarMisCuestionarios();
+        mostrarCursosDisponibles();
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            if (link.href === window.location.href) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

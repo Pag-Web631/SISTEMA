@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Inicio - Panel Estudiante">
+    <meta name="theme-color" content="#667eea">
+    <title>Inicio - Cursos Virtual</title>
+
+    <link rel="stylesheet" href="index.css">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2><i class="fas fa-graduation-cap"></i> Cursos Virtual</h2>
+
+        <ul>
+            <li><a href="inicio-estudiante.html" class="active"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="cursos-estudiante.html"><i class="fas fa-book"></i> Cursos</a></li>
+            <li><a href="tareas-estudiante.html"><i class="fas fa-tasks"></i> Tareas</a></li>
+            <li><a href="cuestionarios-estudiante.html"><i class="fas fa-question-circle"></i> Cuestionarios</a></li>
+            <li><a href="perfil-estudiante.html"><i class="fas fa-user-circle"></i> Perfil</a></li>
+        </ul>
+
+        <button onclick="logout()" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+        <!-- HEADER -->
+        <header>
+            <h3 id="userName"><i class="fas fa-graduation-cap"></i> Estudiante</h3>
+        </header>
+
+        <!-- CONTENIDO DE INICIO -->
+        <section>
+            <h1>Hola, <span id="nombre"></span> 👋</h1>
+            <p>Continúa tu aprendizaje con nosotros</p>
+
+            <button class="btn"><i class="fas fa-play-circle"></i> Continuar Aprendiendo</button>
+
+            <!-- STATS -->
+            <div id="studentDashboardStats" class="stats"></div>
+
+            <h2 style="margin-top: 40px; color: #667eea;"><i class="fas fa-star"></i> Destacados</h2>
+            <div id="studentDashboardCards" class="cards"></div>
+        </section>
+    </main>
+
+    <style>
+        .sidebar a.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+    </style>
+
+    <script>
+        // VERIFICAR LOGIN
+        if (localStorage.getItem("isLoggedIn") !== "true") {
+            window.location.href = "index.html";
+        }
+
+        // CONTROL DE ROL (solo estudiantes)
+        const rol = localStorage.getItem("userRole");
+        if (rol !== "estudiante") {
+            if (rol === "profesor") {
+                window.location.href = "profesor-nuevo.html";
+            } else {
+                window.location.href = "index.html";
+            }
+        }
+
+        // CARGAR DATOS
+        const nombre = localStorage.getItem("userName") || "Usuario";
+        document.getElementById("nombre").textContent = nombre;
+        document.getElementById("userName").textContent = "👨‍🎓 " + nombre;
+
+        // LOGOUT
+        function logout() {
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
+
+        // Marcar link activo
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            if (link.href === window.location.href) {
+                link.classList.add('active');
+            }
+        });
+
+        // Dashboard datos de estudiante (configurables por profesor)
+        function getDashboardData() {
+            const defaultData = {
+                titulo: 'Hola',
+                subtitulo: 'Continúa tu aprendizaje con nosotros',
+                btnTexto: 'Continuar Aprendiendo',
+                stats: {
+                    cursosActivos: 4,
+                    completados: 2,
+                    diasEstudio: 12,
+                    promedio: 8.5
+                },
+                cards: [
+                    {titulo: '🚀 Nuevo Curso: React Avanzado', descripcion: 'Aprende las técnicas más modernas', estado: 'Disponible'},
+                    {titulo: '🎯 Reto de Programación', descripcion: 'Resuelve 5 ejercicios esta semana', estado: 'En Progreso'},
+                    {titulo: '📜 Certificado Obtenido', descripcion: 'Completaste Python Básico', estado: 'Completado'}
+                ]
+            };
+            return JSON.parse(localStorage.getItem('dashboardData')) || defaultData;
+        }
+
+        function renderDashboard() {
+            const data = getDashboardData();
+            
+            // Actualizar título y subtítulo
+            document.querySelector('section h1').innerHTML = `${data.titulo}, <span id="nombre"></span> 👋`;
+            document.querySelector('section p').textContent = data.subtitulo;
+            document.querySelector('.btn').innerHTML = `<i class="fas fa-play-circle"></i> ${data.btnTexto}`;
+            
+            const nombre = localStorage.getItem("userName") || "Usuario";
+            document.getElementById("nombre").textContent = nombre;
+            
+            const statsContainer = document.getElementById('studentDashboardStats');
+            statsContainer.innerHTML = '';
+
+            const statsArray = [
+                {value: data.stats.cursosActivos, label: 'Cursos Activos'},
+                {value: data.stats.completados, label: 'Completados'},
+                {value: data.stats.diasEstudio, label: 'Días de Estudio'},
+                {value: data.stats.promedio, label: 'Promedio'}
+            ];
+
+            statsArray.forEach(s => {
+                const div = document.createElement('div');
+                div.innerHTML = `<h2>${s.value}</h2><p>${s.label}</p>`;
+                statsContainer.appendChild(div);
+            });
+
+            const cardsContainer = document.getElementById('studentDashboardCards');
+            cardsContainer.innerHTML = '';
+            data.cards.forEach(c => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `<h3>${c.titulo}</h3><p>${c.descripcion}</p><span>${c.estado}</span>`;
+                cardsContainer.appendChild(card);
+            });
+        }
+
+        renderDashboard();
+    </script>
+</body>
+</html>

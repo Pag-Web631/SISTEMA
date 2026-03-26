@@ -203,8 +203,11 @@
 
     <script src="api.js"></script>
     <script>
-        // Instancia global de la API
-        var api = new ApiClient();
+        // Instancia global de la API (si no existe)
+        if (typeof api === 'undefined') {
+            var api = new ApiClient();
+            console.log('API instanciada en index.html');
+        }
         // Abrir modal de información
         document.getElementById('infoBtn').addEventListener('click', function() {
             document.getElementById('infoModal').classList.add('active');
@@ -287,6 +290,13 @@
         // Manejar login
         async function handleLogin(event) {
             event.preventDefault();
+            
+            // Verificar que la API esté disponible
+            if (typeof api === 'undefined') {
+                alert('❌ Error: API no cargada. Recarga la página.');
+                return;
+            }
+            
             const email = document.getElementById('loginEmail').value.trim().toLowerCase();
             const password = document.getElementById('loginPassword').value;
             const role = document.getElementById('loginRole').value;
@@ -330,6 +340,13 @@
         // Manejar registro
         async function handleRegister(event) {
             event.preventDefault();
+            
+            // Verificar que la API esté disponible
+            if (typeof api === 'undefined') {
+                alert('❌ Error: API no cargada. Recarga la página.');
+                return;
+            }
+            
             const name = document.getElementById('registerName').value;
             const email = document.getElementById('registerEmail').value;
             const password = document.getElementById('registerPassword').value;

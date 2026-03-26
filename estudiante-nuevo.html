@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Panel del Estudiante - Cursos Virtual">
+    <meta name="theme-color" content="#667eea">
+    <title>Panel Estudiante - Cursos Virtual</title>
+
+    <link rel="stylesheet" href="index.css">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2><i class="fas fa-graduation-cap"></i> Cursos Virtual</h2>
+
+        <ul>
+            <li><a href="#inicio"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="#cursos"><i class="fas fa-book"></i> Cursos</a></li>
+            <li><a href="#tareas"><i class="fas fa-tasks"></i> Tareas</a></li>
+            <li><a href="#perfil"><i class="fas fa-user-circle"></i> Perfil</a></li>
+        </ul>
+
+        <button onclick="logout()" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+        <!-- HEADER -->
+        <header>
+            <h3 id="userName"><i class="fas fa-graduation-cap"></i> Estudiante</h3>
+        </header>
+
+        <!-- INICIO -->
+        <section id="inicio">
+            <h1>Hola, <span id="nombre"></span> 👋</h1>
+            <p>Continúa tu aprendizaje con nosotros</p>
+
+            <button class="btn"><i class="fas fa-play-circle"></i> Continuar Aprendiendo</button>
+
+            <!-- STATS -->
+            <div class="stats">
+                <div>
+                    <h2>4</h2>
+                    <p>Cursos Activos</p>
+                </div>
+                <div>
+                    <h2>2</h2>
+                    <p>Completados</p>
+                </div>
+                <div>
+                    <h2>12</h2>
+                    <p>Días de Estudio</p>
+                </div>
+                <div>
+                    <h2>8.5</h2>
+                    <p>Promedio</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CURSOS -->
+        <section id="cursos">
+            <h2><i class="fas fa-book-open"></i> Mis Cursos</h2>
+
+            <div class="cards">
+                <div class="card">
+                    <h3>🐍 Python</h3>
+                    <p>65% completado</p>
+                    <span>Intermedio</span>
+                </div>
+
+                <div class="card">
+                    <h3>🎨 Diseño Web</h3>
+                    <p>100% completado</p>
+                    <span>Completado</span>
+                </div>
+
+                <div class="card">
+                    <h3>💾 MySQL</h3>
+                    <p>45% completado</p>
+                    <span>Básico</span>
+                </div>
+
+                <div class="card">
+                    <h3>📝 JavaScript</h3>
+                    <p>0% completado</p>
+                    <span>No iniciado</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAREAS -->
+        <section id="tareas">
+            <h2><i class="fas fa-list-check"></i> Tareas Pendientes</h2>
+
+            <div class="card">
+                <p><strong>📌 Variables en Python</strong></p>
+                <span>Vence: 28 Marzo</span>
+            </div>
+
+            <div class="card alert">
+                <p><strong>⚠️ Normalización de BD</strong></p>
+                <span>Vencido - Entregar pronto</span>
+            </div>
+
+            <div class="card">
+                <p><strong>📌 HTML Semántico</strong></p>
+                <span>Vence: 05 Abril</span>
+            </div>
+        </section>
+
+        <!-- PERFIL -->
+        <section id="perfil">
+            <h2><i class="fas fa-user"></i> Mi Perfil</h2>
+
+            <div class="card">
+                <p><strong>👤 Nombre:</strong> <span id="perfilNombre"></span></p>
+                <p><strong>📧 Email:</strong> <span id="perfilEmail"></span></p>
+                <p><strong>🎓 Rol:</strong> Estudiante</p>
+                <p><strong>📅 Miembro desde:</strong> Marzo 2026</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // VERIFICAR LOGIN
+        if (localStorage.getItem("isLoggedIn") !== "true") {
+            window.location.href = "index.html";
+        }
+
+        // CARGAR DATOS
+        const nombre = localStorage.getItem("userName") || "Usuario";
+        const email = localStorage.getItem("userEmail") || "";
+
+        document.getElementById("nombre").textContent = nombre;
+        document.getElementById("perfilNombre").textContent = nombre;
+        document.getElementById("perfilEmail").textContent = email;
+        document.getElementById("userName").textContent = "👨‍🎓 " + nombre;
+
+        // LOGOUT
+        function logout() {
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Mis Tareas - Cursos Virtual">
+    <meta name="theme-color" content="#667eea">
+    <title>Mis Tareas - Cursos Virtual</title>
+
+    <link rel="stylesheet" href="index.css">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .tarea-card { background: white; border-radius: 10px; padding: 20px; margin-bottom: 15px; border-left: 5px solid #667eea; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .tarea-card.vencida { border-left-color: #ef4444; background: #fef2f2; }
+        .tarea-card.pendiente { border-left-color: #3b82f6; }
+        .tarea-card.completada { border-left-color: #10b981; background: #f0fdf4; }
+        .tarea-card h3 { margin: 0 0 10px 0; }
+        .tarea-card p { margin: 5px 0; font-size: 14px; color: #666; }
+        .badge { display: inline-block; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin: 5px 5px 5px 0; }
+        .badge-vencida { background: #fee2e2; color: #991b1b; }
+        .badge-pendiente { background: #dbeafe; color: #1e40af; }
+        .badge-completada { background: #dcfce7; color: #166534; }
+        .tab-buttons { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .tab-buttons button { background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+        .tab-buttons button.active { background: linear-gradient(135deg, #764ba2, #667eea); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .empty-state { text-align: center; padding: 40px 20px; color: #999; }
+        .empty-state i { font-size: 48px; margin-bottom: 10px; }
+        .btn { padding: 8px 15px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; }
+        .btn-primary { background: #667eea; color: white; }
+        .btn-primary:hover { background: #764ba2; }
+    </style>
+</head>
+
+<body>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2><i class="fas fa-tasks"></i> Mis Tareas</h2>
+
+        <ul>
+            <li><a href="inicio-estudiante.html"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="cursos-estudiante.html"><i class="fas fa-book"></i> Cursos</a></li>
+            <li><a href="tareas-estudiante.html" class="active"><i class="fas fa-tasks"></i> Tareas</a></li>
+            <li><a href="cuestionarios-estudiante.html"><i class="fas fa-question-circle"></i> Cuestionarios</a></li>
+            <li><a href="perfil-estudiante.html"><i class="fas fa-user-circle"></i> Perfil</a></li>
+        </ul>
+
+        <button onclick="logout()" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+        <header>
+            <h3><i class="fas fa-tasks"></i> Mis Tareas</h3>
+        </header>
+
+        <!-- TAB BUTTONS -->
+        <div class="tab-buttons">
+            <button class="active" onclick="mostrarTab('todas', this)"><i class="fas fa-inbox"></i> Todas</button>
+            <button onclick="mostrarTab('pendientes', this)"><i class="fas fa-clock"></i> Pendientes</button>
+            <button onclick="mostrarTab('vencidas', this)"><i class="fas fa-exclamation-circle"></i> Vencidas</button>
+            <button onclick="mostrarTab('completadas', this)"><i class="fas fa-check-circle"></i> Completadas</button>
+            <button onclick="mostrarTab('reportes', this)"><i class="fas fa-chart-line"></i> Calificaciones</button>
+        </div>
+
+        <!-- TODAS LAS TAREAS -->
+        <section class="tab-content active" id="tab-todas">
+            <h2><i class="fas fa-list-check"></i> Todas mis Tareas</h2>
+            <div id="tareasTodas"></div>
+        </section>
+
+        <!-- TAREAS PENDIENTES -->
+        <section class="tab-content" id="tab-pendientes">
+            <h2><i class="fas fa-clock"></i> Tareas Pendientes</h2>
+            <div id="tareasPendientes"></div>
+        </section>
+
+        <!-- TAREAS VENCIDAS -->
+        <section class="tab-content" id="tab-vencidas">
+            <h2><i class="fas fa-exclamation-circle"></i> Tareas Vencidas</h2>
+            <div id="tareasVencidas"></div>
+        </section>
+
+        <!-- TAREAS COMPLETADAS -->
+        <section class="tab-content" id="tab-completadas">
+            <h2><i class="fas fa-check-circle"></i> Tareas Completadas</h2>
+            <div id="tareasCompletadas"></div>
+        </section>
+
+        <!-- REPORTE DE CALIFICACIONES -->
+        <section class="tab-content" id="tab-reportes">
+            <h2><i class="fas fa-chart-line"></i> Progreso de Calificaciones</h2>
+            <div id="reporteCalificaciones" style="overflow-x:auto;"></div>
+        </section>
+    </main>
+
+    <!-- MODAL PARA ENTREGAR TAREA -->
+    <div id="modalEntrega" class="modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: white; padding: 30px; border-radius: 10px; width: 100%; max-width: 500px; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+            <span style="float: right; font-size: 28px; font-weight: bold; cursor: pointer; color: #aaa;" onclick="cerrarModalEntrega()">&times;</span>
+            <h2 id="tituloEntrega" style="margin-top: 0;"></h2>
+            <p id="detallesEntrega" style="color: #666;"></p>
+            
+            <div style="margin: 20px 0; padding: 15px; background: #f0f9ff; border-radius: 8px; border-left: 4px solid #667eea;">
+                <label style="display: block; margin-bottom: 10px;"><strong>📎 Selecciona archivo PDF:</strong></label>
+                <input type="file" id="pdfInput" accept=".pdf" style="width: 100%; padding: 10px; border: 2px dashed #667eea; border-radius: 6px; cursor: pointer;">
+                <p id="estadoPDF" style="margin-top: 10px; font-size: 14px; color: #666;"></p>
+            </div>
+            
+            <div id="estadoEntrega"></div>
+            
+            <button onclick="entregarTarea()" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; margin-top: 10px;">
+                <i class="fas fa-upload"></i> Entregar Tarea
+            </button>
+            <button onclick="cerrarModalEntrega()" style="width: 100%; padding: 12px; background: #e5e7eb; color: #333; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; margin-top: 10px;">
+                Cancelar
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // ========== PROTECCIÓN ========== 
+        if (localStorage.getItem("isLoggedIn") !== "true") {
+            window.location.href = "index.html";
+        }
+
+        const nombreEstudiante = localStorage.getItem("userName") || "Estudiante";
+
+        // ========== TAB NAVIGATION ========== 
+        function mostrarTab(tabName, button) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-buttons button').forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById('tab-' + tabName).classList.add('active');
+            if (button) button.classList.add('active');
+
+            if (tabName === 'reportes') {
+                mostrarCalificaciones();
+            } else {
+                cargarTareas(tabName);
+            }
+        }
+
+        // ========== OBTENER TAREAS DEL ESTUDIANTE ========== 
+        function obtenerTareasEstudiante() {
+            const cursos = JSON.parse(localStorage.getItem("cursos")) || [];
+            const tareas = JSON.parse(localStorage.getItem("tareas")) || [];
+            const inscripciones = JSON.parse(localStorage.getItem("inscripciones")) || [];
+
+            // Obtener cursos inscritos
+            const cursosInscritos = inscripciones
+                .filter(i => i.estudiante === nombreEstudiante)
+                .map(i => i.cursoId);
+
+            // Filtrar tareas de cursos inscritos
+            const tareasDelEstudiante = tareas.filter(t => cursosInscritos.includes(t.cursoId));
+
+            return { tareas: tareasDelEstudiante, cursos, inscritos: cursosInscritos };
+        }
+
+        // ========== CARGAR Y MOSTRAR TAREAS ========== 
+        function cargarTareas(tipo) {
+            const { tareas, cursos } = obtenerTareasEstudiante();
+            const entregas = JSON.parse(localStorage.getItem("entregas")) || [];
+            const hoy = new Date();
+            hoy.setHours(0, 0, 0, 0);
+
+            let tareasAMostrar = [];
+
+            tareas.forEach(tarea => {
+                const fechaTarea = new Date(tarea.fecha);
+                if (isNaN(fechaTarea)) return;
+
+                let estado = 'pendiente';
+                if (fechaTarea < hoy) {
+                    estado = 'vencida';
+                }
+
+                tareasAMostrar.push({ ...tarea, estado, fechaTarea });
+            });
+
+            let html = "";
+
+            if (tipo === 'todas') {
+                tareasAMostrar.sort((a, b) => a.fechaTarea - b.fechaTarea);
+            } else if (tipo === 'pendientes') {
+                tareasAMostrar = tareasAMostrar.filter(t => t.estado === 'pendiente');
+                tareasAMostrar.sort((a, b) => a.fechaTarea - b.fechaTarea);
+            } else if (tipo === 'vencidas') {
+                tareasAMostrar = tareasAMostrar.filter(t => t.estado === 'vencida');
+            } else if (tipo === 'completadas') {
+                tareasAMostrar = [];
+            }
+
+            if (tareasAMostrar.length === 0) {
+                html = `
+                    <div class="empty-state">
+                        <i class="fas fa-check-double"></i>
+                        <p>No hay tareas en esta categoría</p>
+                    </div>
+                `;
+            } else {
+                tareasAMostrar.forEach(tarea => {
+                    const curso = cursos.find(c => c.id === tarea.cursoId);
+                    const diasRestantes = Math.ceil((tarea.fechaTarea - hoy) / (1000 * 60 * 60 * 24));
+                    const tildeEstado = tarea.estado === 'vencida' ? '❌' : '📌';
+
+                    // Obtener estado de entrega
+                    const entrega = entregas.find(e => e.tareaId === tarea.id && e.estudiante === nombreEstudiante);
+                    let estadoEntrega = "⚠️ Sin entregar";
+                    let estiloEntrega = "";
+                    let botonesExtra = "";
+
+                    if (entrega) {
+                        if (entrega.calificacion !== undefined) {
+                            estadoEntrega = `✅ Calificada: ${entrega.calificacion}/10`;
+                            estiloEntrega = "color: #10b981; font-weight: 600;";
+                            botonesExtra = `
+                                <p style="background: #f0fdf4; padding: 10px; border-radius: 6px; margin: 10px 0; color: #166534;">
+                                    <strong>Comentarios:</strong> ${entrega.comentarios || 'Sin comentarios'}
+                                </p>
+                            `;
+                        } else {
+                            estadoEntrega = "📤 Entregada";
+                            estiloEntrega = "color: #3b82f6; font-weight: 600;";
+                        }
+                    }
+
+                    html += `
+                        <div class="tarea-card ${tarea.estado}">
+                            <h3>${tildeEstado} ${tarea.nombre}</h3>
+                            <p><strong>Curso:</strong> ${curso ? curso.nombre : 'N/A'}</p>
+                            <p><strong>Descripción:</strong> ${tarea.descripcion}</p>
+                            <p><strong>Puntos Máximos:</strong> ${tarea.puntos}</p>
+                            <div>
+                                <span class="badge badge-${tarea.estado}">
+                                    ${tarea.estado === 'vencida' ? '❌ VENCIDA' : '📅 Fecha: ' + tarea.fecha}
+                                </span>
+                                ${tarea.estado === 'pendiente' ? `
+                                    <span class="badge" style="background: #fef3c7; color: #925a00;">
+                                        ⏳ ${diasRestantes} día(s) restante(s)
+                                    </span>
+                                ` : ''}
+                            </div>
+                            <p style="${estiloEntrega}">
+                                ${estadoEntrega}
+                            </p>
+                            ${botonesExtra}
+                            <button class="btn btn-primary" style="margin-top: 10px;" onclick="irAEntrega(${tarea.id}, '${tarea.nombre}')">
+                                <i class="fas fa-file-upload"></i> ${entrega ? 'Ver/Actualizar' : 'Entregar'}
+                            </button>
+                        </div>
+                    `;
+                });
+            }
+
+            // Determinar qué elemento actualizar
+            const idElemento = {
+                'todas': 'tareasTodas',
+                'pendientes': 'tareasPendientes',
+                'vencidas': 'tareasVencidas',
+                'completadas': 'tareasCompletadas'
+            }[tipo];
+
+            document.getElementById(idElemento).innerHTML = html;
+        }
+
+        // ========== IR A ENTREGAR TAREA ========== 
+        let tareaActualEntrega = null;
+
+        function irAEntrega(tareaId, nombreTarea) {
+            const { tareas, cursos } = obtenerTareasEstudiante();
+            const tarea = tareas.find(t => t.id === tareaId);
+            if (!tarea) return;
+
+            tareaActualEntrega = { tareaId, nombreTarea };
+            
+            // Obtener estado de entrega si existe
+            const entregas = JSON.parse(localStorage.getItem("entregas")) || [];
+            const entrega = entregas.find(e => e.tareaId === tareaId && e.estudiante === nombreEstudiante);
+
+            document.getElementById("tituloEntrega").textContent = `📤 Entregar: ${nombreTarea}`;
+            document.getElementById("detallesEntrega").textContent = `Fecha de entrega: ${tarea.fecha} | Puntos máximos: ${tarea.puntos}`;
+            
+            // Mostrar estado de entrega
+            let html = "";
+            if (entrega) {
+                html = `
+                    <div style="background: #f0fdf4; padding: 15px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #10b981;">
+                        <p style="margin: 0;"><strong>📌 Estado:</strong> ${entrega.calificacion !== undefined ? '✅ Calificada' : '📤 Entregada'}</p>
+                        <p style="margin: 5px 0;"><strong>Fecha Entrega:</strong> ${entrega.fecha}</p>
+                        ${entrega.calificacion !== undefined ? `
+                            <p style="margin: 5px 0; color: #10b981; font-size: 16px;"><strong>Calificación: ${entrega.calificacion}/10</strong></p>
+                            <p style="margin: 5px 0;"><strong>Comentarios:</strong> ${entrega.comentarios || 'Sin comentarios'}</p>
+                            <p style="margin: 5px 0; font-size: 12px; color: #666;">Calificada el: ${entrega.fechaCalificacion}</p>
+                        ` : '<p style="margin: 5px 0; color: #f59e0b;"><strong>Pendiente de calificación</strong></p>'}
+                    </div>
+                `;
+            }
+            document.getElementById("estadoEntrega").innerHTML = html;
+            document.getElementById("estadoPDF").textContent = entrega && entrega.pdfUrl ? "✅ PDF cargado" : "⚠️ Selecciona un PDF";
+            
+            // Abrir modal
+            document.getElementById("modalEntrega").style.display = "flex";
+        }
+
+        function cerrarModalEntrega() {
+            document.getElementById("modalEntrega").style.display = "none";
+            document.getElementById("pdfInput").value = "";
+            tareaActualEntrega = null;
+        }
+
+        function entregarTarea() {
+            const pdfFile = document.getElementById("pdfInput").files[0];
+            
+            if (!tareaActualEntrega) {
+                alert("⚠️ Error: No hay tarea seleccionada");
+                return;
+            }
+
+            // Si ya existe entrega, no permitir cambiar (opcional)
+            const entregas = JSON.parse(localStorage.getItem("entregas")) || [];
+            const yaEntregada = entregas.find(e => e.tareaId === tareaActualEntrega.tareaId && e.estudiante === nombreEstudiante);
+
+            if (yaEntregada && !pdfFile) {
+                // Tarea ya entregada, solo mostrar estado
+                alert("✅ Tarea ya entregada anteriormente");
+                cerrarModalEntrega();
+                cargarTareas('todas');
+                return;
+            }
+
+            if (!pdfFile) {
+                alert("⚠️ Por favor selecciona un archivo PDF");
+                return;
+            }
+
+            // Validar que sea PDF
+            if (pdfFile.type !== "application/pdf") {
+                alert("⚠️ Solo se aceptan archivos PDF");
+                return;
+            }
+
+            // Leer PDF y convertir a base64
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const pdfBase64 = e.target.result;
+
+                // Crear entrada de entrega
+                if (yaEntregada) {
+                    // Actualizar entrega existente
+                    const indice = entregas.findIndex(ent => ent.tareaId === tareaActualEntrega.tareaId && ent.estudiante === nombreEstudiante);
+                    entregas[indice].pdfUrl = pdfBase64;
+                    entregas[indice].fecha = new Date().toLocaleDateString('es-ES');
+                } else {
+                    // Nueva entrega
+                    entregas.push({
+                        estudiante: nombreEstudiante,
+                        tareaId: tareaActualEntrega.tareaId,
+                        pdfUrl: pdfBase64,
+                        fecha: new Date().toLocaleDateString('es-ES'),
+                        calificacion: undefined,
+                        comentarios: "",
+                        fechaCalificacion: undefined
+                    });
+                }
+
+                localStorage.setItem("entregas", JSON.stringify(entregas));
+                alert("✅ Tarea entregada exitosamente");
+                cerrarModalEntrega();
+                cargarTareas('todas');
+            };
+            reader.readAsDataURL(pdfFile);
+        }
+
+        // ========== REPORTE DE CALIFICACIONES ========== 
+        function mostrarCalificaciones() {
+            const cursos = JSON.parse(localStorage.getItem("cursos")) || [];
+            const tareas = JSON.parse(localStorage.getItem("tareas")) || [];
+            const cuestionarios = JSON.parse(localStorage.getItem("cuestionarios")) || [];
+            const entregas = JSON.parse(localStorage.getItem("entregas")) || [];
+            const respuestas = JSON.parse(localStorage.getItem("respuestas")) || [];
+            const inscripciones = JSON.parse(localStorage.getItem("inscripciones")) || [];
+
+            // Solo elementos del estudiante
+            const cursosInscritos = inscripciones
+                .filter(i => i.estudiante === nombreEstudiante)
+                .map(i => i.cursoId);
+
+            const tareasEstudiante = tareas.filter(t => cursosInscritos.includes(t.cursoId));
+            const cuestionariosEstudiante = cuestionarios.filter(q => cursosInscritos.includes(q.cursoId));
+
+            const registros = [];
+
+            // Tareas
+            tareasEstudiante.forEach(tarea => {
+                const entrega = entregas.find(e => e.tareaId === tarea.id && e.estudiante === nombreEstudiante);
+                const calificacion = entrega && entrega.calificacion !== undefined ? entrega.calificacion : null;
+                const comentarios = entrega ? entrega.comentarios || '' : '';
+                const porcentaje = calificacion !== null ? ((calificacion / tarea.puntos) * 100).toFixed(2) : '-';
+
+                registros.push({
+                    curso: cursos.find(c => c.id === tarea.cursoId)?.nombre || 'N/A',
+                    tipo: 'Tarea',
+                    nombre: tarea.nombre,
+                    ponderacion: tarea.puntos,
+                    calificacion: calificacion !== null ? calificacion.toFixed(2) : '(Vacío)',
+                    rango: `0–${tarea.puntos}`,
+                    porcentaje: calificacion !== null ? `${porcentaje}%` : '-',
+                    retroalimentacion: comentarios,
+                    aporta: calificacion !== null ? ((calificacion / tarea.puntos) * tarea.puntos).toFixed(2) : '0.00'
+                });
+            });
+
+            // Cuestionarios
+            cuestionariosEstudiante.forEach(cuestionario => {
+                const resultado = respuestas.find(r => r.estudiante === nombreEstudiante && r.cuestionarioId === cuestionario.id);
+                const maxPuntos = cuestionario.totalPuntos || (cuestionario.preguntas?.length || 0);
+                const puntaje = resultado ? resultado.puntaje : null;
+                const comentarios = resultado ? (resultado.comentarios || '') : '';
+                const porcentaje = puntaje !== null ? ((puntaje / maxPuntos) * 100).toFixed(2) : '-';
+
+                registros.push({
+                    curso: cursos.find(c => c.id === cuestionario.cursoId)?.nombre || 'N/A',
+                    tipo: 'Cuestionario',
+                    nombre: cuestionario.nombre,
+                    ponderacion: maxPuntos,
+                    calificacion: puntaje !== null ? puntaje.toFixed(2) : '(Vacío)',
+                    rango: `0–${maxPuntos}`,
+                    porcentaje: puntaje !== null ? `${porcentaje}%` : '-',
+                    retroalimentacion: comentarios,
+                    aporta: puntaje !== null ? ((puntaje / maxPuntos) * maxPuntos).toFixed(2) : '0.00'
+                });
+            });
+
+            if (registros.length === 0) {
+                document.getElementById('reporteCalificaciones').innerHTML = `<div class="empty-state"><i class="fas fa-info-circle"></i><p>No hay calificaciones registradas aún.</p></div>`;
+                return;
+            }
+
+            const totalPonderacion = registros.reduce((sum, r) => sum + parseFloat(r.ponderacion), 0);
+            let totalAporta = registros.reduce((sum, r) => sum + parseFloat(r.aporta || 0), 0);
+
+            let html = `
+                <table style="width:100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: #eef2ff">
+                            <th style="padding: 10px; border: 1px solid #ddd; text-align:left;">Ítem de Calificación</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">Ponderación calculada</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">Calificación</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">Rango</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">Porcentaje</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">Retroalimentación</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">Aporta al total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            registros.forEach(r => {
+                const aportax = totalPonderacion > 0 ? ((r.ponderacion / totalPonderacion) * 100).toFixed(2) + '%' : '0%';
+                html += `
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${r.tipo} - ${r.nombre}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; text-align:right;">${r.ponderacion.toFixed(2)}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; text-align:right;">${r.calificacion}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; text-align:center;">${r.rango}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; text-align:right;">${r.porcentaje}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">${r.retroalimentacion || '-'}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd; text-align:right;">${r.aporta}</td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                    </tbody>
+                </table>
+                <div style="margin-top: 15px; background: #f3f4f6; padding: 12px; border-radius: 8px;">
+                    <strong>Total Ponderación:</strong> ${totalPonderacion.toFixed(2)} &nbsp;|&nbsp; <strong>Contribución Total:</strong> ${totalAporta.toFixed(2)}
+                </div>
+            `;
+
+            document.getElementById('reporteCalificaciones').innerHTML = html;
+        }
+
+        // ========== LOGOUT ==========
+        function logout() {
+            if (confirm("¿Cerrar sesión?")) {
+                localStorage.removeItem("isLoggedIn");
+                localStorage.removeItem("userName");
+                localStorage.removeItem("userEmail");
+                localStorage.removeItem("userRole");
+                window.location.href = "index.html";
+            }
+        }
+
+        // CARGAR AL INICIO
+        cargarTareas('todas');
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            if (link.href === window.location.href) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Mi Perfil - Panel Estudiante">
+    <meta name="theme-color" content="#667eea">
+    <title>Perfil - Cursos Virtual</title>
+
+    <link rel="stylesheet" href="index.css">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        .profile-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 20px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .profile-info {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #667eea;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-value {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+            border-top: 4px solid #667eea;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .progress-item {
+            margin-bottom: 20px;
+        }
+
+        .progress-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .progress-bar {
+            background: #f0f0f0;
+            height: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s ease;
+        }
+
+        .btn-edit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn-edit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <h2><i class="fas fa-graduation-cap"></i> Cursos Virtual</h2>
+
+        <ul>
+            <li><a href="inicio-estudiante.html"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="cursos-estudiante.html"><i class="fas fa-book"></i> Cursos</a></li>
+            <li><a href="tareas-estudiante.html"><i class="fas fa-tasks"></i> Tareas</a></li>
+            <li><a href="cuestionarios-estudiante.html"><i class="fas fa-question-circle"></i> Cuestionarios</a></li>
+            <li><a href="perfil-estudiante.html" class="active"><i class="fas fa-user-circle"></i> Perfil</a></li>
+        </ul>
+
+        <button onclick="logout()" class="logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+        <!-- HEADER -->
+        <header>
+            <h3 id="userName"><i class="fas fa-graduation-cap"></i> Estudiante</h3>
+        </header>
+
+        <!-- CONTENIDO DE PERFIL -->
+        <section>
+            <h2><i class="fas fa-user"></i> Mi Perfil</h2>
+            <p>Información personal y académica</p>
+
+            <!-- HEADER DE PERFIL -->
+            <div class="profile-header">
+                <div class="avatar">👨‍🎓</div>
+                <h1 id="perfilNombre"></h1>
+                <p>Estudiante | Miembro desde Marzo 2026</p>
+            </div>
+
+            <!-- INFORMACIÓN PERSONAL -->
+            <div class="profile-info">
+                <h3 style="color: #667eea; margin-bottom: 20px;">📋 Información Personal</h3>
+                
+                <div class="info-row">
+                    <span class="info-label"><i class="fas fa-user"></i> Nombre Completo</span>
+                    <span class="info-value" id="perfilNombreCompleto">-</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label"><i class="fas fa-envelope"></i> Correo Electrónico</span>
+                    <span class="info-value" id="perfilEmail"></span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label"><i class="fas fa-id-card"></i> Rol</span>
+                    <span class="info-value">👨‍🎓 Estudiante</span>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-label"><i class="fas fa-calendar"></i> Miembro desde</span>
+                    <span class="info-value">25 de Marzo, 2026</span>
+                </div>
+            </div>
+
+            <!-- ESTADÍSTICAS -->
+            <h3 style="color: #667eea; margin: 30px 0 20px 0;"><i class="fas fa-chart-bar"></i> Estadísticas Académicas</h3>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Cursos Activos</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Cursos Completados</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">8.5</div>
+                    <div class="stat-label">Promedio General</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-number">45%</div>
+                    <div class="stat-label">Completado Overall</div>
+                </div>
+            </div>
+
+            <!-- PROGRESO EN CURSOS -->
+            <div class="profile-info">
+                <h3 style="color: #667eea; margin-bottom: 25px;"><i class="fas fa-book"></i> Progreso en Cursos</h3>
+                
+                <div class="progress-item">
+                    <div class="progress-title">
+                        <span>Python Avanzado</span>
+                        <span>65%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%;"></div>
+                    </div>
+                </div>
+
+                <div class="progress-item">
+                    <div class="progress-title">
+                        <span>Diseño Web Responsivo</span>
+                        <span>100%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%;"></div>
+                    </div>
+                </div>
+
+                <div class="progress-item">
+                    <div class="progress-title">
+                        <span>MySQL y Bases de Datos</span>
+                        <span>45%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 45%;"></div>
+                    </div>
+                </div>
+
+                <div class="progress-item">
+                    <div class="progress-title">
+                        <span>JavaScript Moderno</span>
+                        <span>0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CERTIFICADOS -->
+            <div class="profile-info" style="margin-top: 30px;">
+                <h3 style="color: #667eea; margin-bottom: 20px;"><i class="fas fa-certificate"></i> Certificados Obtenidos</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card" style="border-top-color: #10b981; background: #f0fdf4;">
+                        <div style="font-size: 2rem; margin-bottom: 10px;">🏆</div>
+                        <div style="color: #10b981; font-weight: 600;">Certificado en Diseño Web</div>
+                        <div style="color: #888; font-size: 0.9rem;">Completado hace 1 semana</div>
+                    </div>
+
+                    <div class="stat-card" style="border-top-color: #7c3aed; background: #faf5ff;">
+                        <div style="font-size: 2rem; margin-bottom: 10px;">🎯</div>
+                        <div style="color: #7c3aed; font-weight: 600;">Reto de Programación</div>
+                        <div style="color: #888; font-size: 0.9rem;">Actualmente en progreso</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-edit" onclick="alert('Función de edición en desarrollo')">
+                <i class="fas fa-edit"></i> Editar Perfil
+            </button>
+        </section>
+    </main>
+
+    <style>
+        .sidebar a.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+    </style>
+
+    <script>
+        // VERIFICAR LOGIN
+        if (localStorage.getItem("isLoggedIn") !== "true") {
+            window.location.href = "index.html";
+        }
+
+        // CARGAR DATOS
+        const nombre = localStorage.getItem("userName") || "Usuario";
+        const email = localStorage.getItem("userEmail") || "correo@ejemplo.com";
+
+        document.getElementById("userName").textContent = "👨‍🎓 " + nombre;
+        document.getElementById("perfilNombre").textContent = nombre;
+        document.getElementById("perfilNombreCompleto").textContent = nombre;
+        document.getElementById("perfilEmail").textContent = email;
+
+        // LOGOUT
+        function logout() {
+            localStorage.clear();
+            window.location.href = "index.html";
+        }
+
+        // Marcar link activo
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            if (link.href === window.location.href) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
