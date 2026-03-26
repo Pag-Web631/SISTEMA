@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="description" content="Plataforma de aprendizaje en línea - Cursos Virtual">
+    <meta name="theme-color" content="#667eea">
+    <title>Cursos Virtual - Iniciar Sesión</title>
+ <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135755.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+   
+
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" alt="Logo Cursos Virtual">
+
+    <h1>¡Bienvenido!</h1>     <div class="container">
+        <!-- SECCIÓN IZQUIERDA -->
+       <div class="left-section">
+
+    <button class="info-btn" id="infoBtn" title="Información">
+        <i class="fas fa-info-circle">Informacion</i>
+    </button>
+            <p id="leftText">Accede a tu cuenta y disfruta de todas las características que tenemos para ti. Tu experiencia de aprendizaje comienza aquí.</p>
+
+            <div class="dot-pattern">
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN DERECHA -->
+        <div class="right-section">
+            <!-- FORMULARIO DE LOGIN -->
+            <div class="form-container active" id="loginForm">
+                <div class="form-header">
+                    <h2>Iniciar Sesión</h2>
+                    <p>Accede con tu cuenta existente</p>
+                </div>
+
+                <form onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label for="loginEmail">📧 Correo Electrónico</label>
+                        <input type="email" id="loginEmail" placeholder="ejemplo@correo.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginPassword">🔐 Contraseña</label>
+                        <input type="password" id="loginPassword" placeholder="Tu contraseña" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginRole">🎓 Tipo de Cuenta</label>
+                        <select id="loginRole" required>
+                            <option value="">Selecciona tu rol</option>
+                            <option value="estudiante">Estudiante</option>
+                            <option value="profesor">Profesor</option>
+                        </select>
+                    </div>
+
+                    <div class="remember-forgot">
+                        <label>
+                            <input type="checkbox"> Recuérdame
+                        </label>
+                        <a href="#">¿Olvidaste tu contraseña?</a>
+                    </div>
+
+                    <button type="submit">Iniciar Sesión</button>
+                </form>
+
+                <div class="divider">
+                    <span>O continúa con</span>
+                </div>
+
+                <div class="social-login">
+                    <button type="button" class="social-btn" title="Google">
+                        <i class="fab fa-google"></i>
+                    </button>
+                    <button type="button" class="social-btn" title="Facebook">
+                        <i class="fab fa-facebook"></i>
+                    </button>
+                    <button type="button" class="social-btn" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </button>
+                </div>
+
+                <div class="toggle-text">
+                    ¿No tienes cuenta? <button type="button" onclick="toggleForms()">Regístrate aquí</button>
+                </div>
+            </div>
+
+            <!-- FORMULARIO DE REGISTRO -->
+            <div class="form-container" id="registerForm">
+                <div class="form-header">
+                    <h2>Crear Cuenta</h2>
+                    <p>Únete a nuestra comunidad de aprendizaje</p>
+                </div>
+
+                <form onsubmit="handleRegister(event)">
+                    <div class="form-group">
+                        <label for="registerName">👤 Nombre Completo</label>
+                        <input type="text" id="registerName" placeholder="Tu nombre" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerEmail">📧 Correo Electrónico</label>
+                        <input type="email" id="registerEmail" placeholder="ejemplo@correo.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerPassword">🔐 Contraseña</label>
+                        <input type="password" id="registerPassword" placeholder="Mínimo 6 caracteres" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="registerRole">🎓 Tipo de Cuenta</label>
+                        <select id="registerRole" required>
+                            <option value="">Selecciona tu rol</option>
+                            <option value="estudiante">Estudiante</option>
+                        </select>
+                    </div>
+
+                    <div class="remember-forgot">
+                        <label>
+                            <input type="checkbox" required> Acepto los términos y condiciones
+                        </label>
+                    </div>
+
+                    <button type="submit">Crear Cuenta</button>
+                </form>
+
+                <div class="toggle-text">
+                    ¿Ya tienes cuenta? <button type="button" onclick="toggleForms()">Inicia sesión aquí</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE INFORMACIÓN -->
+    <div class="modal" id="infoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-graduation-cap"></i> Acerca de Cursos Virtual</h2>
+                <button class="close-btn" onclick="closeInfoModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="cards-container">
+                <!-- Tarjeta 1: Sistema -->
+                <div class="info-card">
+                    <h3>📱 Sistema</h3>
+                    <p><strong>Nombre:</strong> Cursos Virtual</p>
+                    <p><strong>Versión:</strong> 2.0.0</p>
+                    <p><strong>Tipo:</strong> Plataforma E-Learning</p>
+                    <p><strong>Año:</strong> 2026</p>
+                    <p><strong>Enfoque:</strong> Educación Tecnológica</p>
+                </div>
+
+                <!-- Tarjeta 2: Desarrollador -->
+                <div class="info-card">
+                    <h3>👨‍💻 Desarrollador</h3>
+                    <p><strong>Nombre:</strong> José Augusto</p>
+                    <p><strong>Email:</strong> contacto@cursosvirtual.com</p>
+                    <p><strong>Ubicación:</strong> Colombia / República Dominicana</p>
+                    <p><strong>Especialidad:</strong> Desarrollo Web & Apps</p>
+                    <p><strong>Objetivo:</strong> Impulsar programadores en RD</p>
+                </div>
+
+                <!-- Tarjeta 3: Características -->
+                <div class="info-card">
+                    <h3>🎯 Características</h3>
+                    <p>✨ Interfaz moderna y atractiva</p>
+                    <p>🔐 Sistema de autenticación seguro</p>
+                    <p>📚 Cursos interactivos y dinámicos</p>
+                    <p>⚡ Plataforma rápida y optimizada</p>
+                    <p>📱 Diseño responsive (móvil y PC)</p>
+                    <p>🌐 Acceso desde cualquier lugar</p>
+                </div>
+
+                <!-- Tarjeta 4: Programación en RD -->
+                <div class="info-card">
+                    <h3>🇩🇴 Oportunidades en RD</h3>
+                    <p>💻 Alta demanda de desarrolladores</p>
+                    <p>🌐 Crecimiento del sector tecnológico</p>
+                    <p>📈 Oportunidades freelance</p>
+                    <p>🎓 Formación en HTML, CSS, JS, PHP</p>
+                    <p>🚀 Apoyo a nuevos talentos</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="api.js"></script>
+    <script>
+        // Instancia global de la API
+        var api = new ApiClient();
+        // Abrir modal de información
+        document.getElementById('infoBtn').addEventListener('click', function() {
+            document.getElementById('infoModal').classList.add('active');
+        });
+
+        function closeInfoModal() {
+            document.getElementById('infoModal').classList.remove('active');
+        }
+
+        // Cerrar modal al hacer clic fuera de él
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('infoModal');
+            if (event.target === modal) {
+                closeInfoModal();
+            }
+        });
+
+        // Cambiar entre formularios de login y registro
+        function toggleForms() {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const leftText = document.getElementById('leftText');
+            
+            loginForm.classList.toggle('active');
+            registerForm.classList.toggle('active');
+            
+            if (registerForm.classList.contains('active')) {
+                leftText.textContent = 'Únete a nuestra comunidad de aprendizaje virtual. Acceso a miles de cursos y recursos educativos.';
+            } else {
+                leftText.textContent = 'Accede a tu cuenta y disfruta de todas las características que tenemos para ti. Tu experiencia de aprendizaje comienza aquí.';
+            }
+        }
+
+        // Inicializar usuario administrador por defecto (solo para compatibilidad local)
+        function initializeDefaultUsers() {
+            // Nota: Ahora usamos backend, pero mantenemos compatibilidad local por si no hay conexión
+            const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+            const adminIndex = usuarios.findIndex(u => u.email.toLowerCase() === 'admin@corses.com');
+
+            if (adminIndex === -1) {
+                usuarios.push({
+                    fullName: 'Jose',
+                    email: 'admin@corses.com',
+                    password: 'jose1234',
+                    role: 'profesor'
+                });
+            } else {
+                const admin = usuarios[adminIndex];
+                if (admin.role !== 'profesor' || admin.password !== 'jose1234' || admin.fullName !== 'Jose') {
+                    usuarios[adminIndex] = {
+                        fullName: 'Jose',
+                        email: 'admin@corses.com',
+                        password: 'jose1234',
+                        role: 'profesor'
+                    };
+                }
+            }
+
+            localStorage.setItem('usuarios', JSON.stringify(usuarios));
+        }
+
+        initializeDefaultUsers();
+
+        // Redireccionar si ya hay sesión iniciada (verificar token)
+        if (localStorage.getItem('token') && localStorage.getItem('isLoggedIn') === 'true') {
+            const rolActual = localStorage.getItem('userRole');
+            if (rolActual === 'estudiante') {
+                window.location.href = 'inicio-estudiante.html';
+            } else if (rolActual === 'profesor') {
+                window.location.href = 'profesor-nuevo.html';
+            } else {
+                // Si el valor de rol está corrupto, limpiar sesión y recargar
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userRole');
+                localStorage.removeItem('token');
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Manejar login
+        async function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim().toLowerCase();
+            const password = document.getElementById('loginPassword').value;
+            const role = document.getElementById('loginRole').value;
+            
+            if (!role) {
+                alert('Por favor selecciona un rol');
+                return;
+            }
+            
+            if (email.length < 5) {
+                alert('Por favor ingresa un correo válido');
+                return;
+            }
+            
+            if (password.length < 3) {
+                alert('La contraseña debe tener al menos 3 caracteres');
+                return;
+            }
+
+            try {
+                const data = await api.login(email, password, role);
+                
+                // Guardar datos en localStorage
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userName', data.user.fullName || email.split('@')[0]);
+                localStorage.setItem('userEmail', data.user.email);
+                localStorage.setItem('userRole', data.user.role);
+                localStorage.setItem('userId', data.user._id);
+                
+                // Redirigir según rol
+                if (role === 'estudiante') {
+                    window.location.href = 'inicio-estudiante.html';
+                } else {
+                    window.location.href = 'profesor-nuevo.html';
+                }
+            } catch (error) {
+                alert('❌ Error en login: ' + error.message);
+            }
+        }
+
+        // Manejar registro
+        async function handleRegister(event) {
+            event.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const role = document.getElementById('registerRole').value;
+            
+            if (!role) {
+                alert('Por favor selecciona un rol');
+                return;
+            }
+            
+            if (name.length < 3) {
+                alert('El nombre debe tener al menos 3 caracteres');
+                return;
+            }
+            
+            if (email.length < 5) {
+                alert('Por favor ingresa un correo válido');
+                return;
+            }
+            
+            if (password.length < 3) {
+                alert('La contraseña debe tener al menos 3 caracteres');
+                return;
+            }
+
+            if (role === 'profesor') {
+                alert('Registro de profesor no permitido desde aquí. Contacta al administrador.');
+                return;
+            }
+            
+            try {
+                await api.register(name, email, password, role);
+                alert('Cuenta creada con éxito. Ahora inicia sesión.');
+                window.location.href = 'index.html';
+            } catch (error) {
+                alert('❌ Error en registro: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>
